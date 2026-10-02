@@ -2,6 +2,8 @@ import streamlit as st
 import matplotlib.pyplot as plt
 import preprocessing
 import helper
+import zipfile
+import io
 
 st.set_page_config(
     page_title="WhatsApp Analyzer",
@@ -289,17 +291,35 @@ st.sidebar.title(" WhatsApp Analyzer")
 st.sidebar.markdown("###  Upload Chat")
 
 uploaded_file = st.sidebar.file_uploader(
-    "Choose WhatsApp exported .txt file",
-    type=["txt"]
+    "Choose WhatsApp exported ZIP file",
+    type=["zip"]
 )
 
 if uploaded_file is not None:
-    bytes_data = uploaded_file.getvalue()
+    try:
+        zip_data = zipfile.ZipFile(
+            io.BytesIO(uploaded_file.getvalue())
+        )
 
-    data = bytes_data.decode(
-        "utf-8",
-        errors="ignore"
-    )
+        txt_files = [
+            file for file in zip_data.namelist()
+            if file.lower().endswith(".txt")
+        ]
+
+        if not txt_files:
+            st.error("No WhatsApp chat .txt file found inside the ZIP file.")
+            st.stop()
+
+        chat_file = txt_files[0]
+
+        data = zip_data.read(chat_file).decode(
+            "utf-8",
+            errors="ignore"
+        )
+
+    except Exception as e:
+        st.error(f"Unable to read ZIP file: {e}")
+        st.stop()
 
     try:
         df = preprocessing.preprocessing(data)
