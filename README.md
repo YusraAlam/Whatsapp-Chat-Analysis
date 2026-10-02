@@ -40,12 +40,11 @@ NLP & Text Processing: Urlextract, Emoji, WordCloud
 
 whatsapp-chat-analyzer/
 │
-├── .streamlit/
-│   └── config.toml     # Streamlit theme and custom styling configuration
+├── stop_hinglish.txt
 ├── app.py              # Main Streamlit application
 ├── preprocessor.py     # Data cleaning and parsing logic
 ├── helper.py           # Statistical and plotting functions
-├── requirements.txt    # Required Python packages
+├── ss1.png             # Required Python packages
 └── README.md           # Project documentation
 
 
