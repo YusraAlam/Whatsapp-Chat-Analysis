@@ -309,7 +309,7 @@ if uploaded_file is not None:
     )
 
     if 'group-notification' in user_list:
-    user_list.remove('group_notification')
+      user_list.remove('group_notification')
 
     user_list.sort()
 
