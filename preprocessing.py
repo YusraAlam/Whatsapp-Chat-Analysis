@@ -2,16 +2,21 @@ import re
 import pandas as pd
 
 def preprocessing(data):
-    # Regex for 12-hour and 24-hour WhatsApp chat formats
+    # Naye bracket format (with seconds) aur purane WhatsApp export formats ke liye patterns
+    pattern_bracket = r'\[\d{1,2}/\d{1,2}/\d{2,4},\s\d{1,2}:\d{2}:\d{2}\s[AP]M\]\s'
     pattern_12 = r'\d{1,2}/\d{1,2}/\d{2,4},\s\d{1,2}:\d{2}\s[AP]M\s-\s'
     pattern_24 = r'\d{1,2}/\d{1,2}/\d{2,4},\s\d{1,2}:\d{2}\s-\s'
     
-    messages = re.split(pattern_12, data)
+    messages = re.split(pattern_bracket, data)
     if len(messages) <= 1:
-        messages = re.split(pattern_24, data)
-        pattern = pattern_24
+        messages = re.split(pattern_12, data)
+        if len(messages) <= 1:
+            messages = re.split(pattern_24, data)
+            pattern = pattern_24
+        else:
+            pattern = pattern_12
     else:
-        pattern = pattern_12
+        pattern = pattern_bracket
 
     dates = re.findall(pattern, data)
     
@@ -20,22 +25,33 @@ def preprocessing(data):
 
     df = pd.DataFrame({'user_message': messages, 'message_date': dates})
     
-    # Clean date string
+    # Clean date string (brackets aur extra characters hatana)
     df['message_date'] = df['message_date'].fillna('').astype(str)
+    df['message_date'] = df['message_date'].str.replace('[', '', regex=False)
+    df['message_date'] = df['message_date'].str.replace(']', '', regex=False)
     df['message_date'] = df['message_date'].str.replace(' - ', '', regex=False)
     df['message_date'] = df['message_date'].str.strip()
     
-    # Try parsing dates safely
+    # Try parsing dates safely including seconds format (%I:%M:%S %p)
     try:
-        df['date'] = pd.to_datetime(df['message_date'], format='%d/%m/%y, %I:%M %p')
+        df['date'] = pd.to_datetime(df['message_date'], format='%m/%d/%y, %I:%M:%S %p')
     except:
         try:
-            df['date'] = pd.to_datetime(df['message_date'], format='%d/%m/%Y, %I:%M %p')
+            df['date'] = pd.to_datetime(df['message_date'], format='%d/%m/%y, %I:%M:%S %p')
         except:
             try:
-                df['date'] = pd.to_datetime(df['message_date'], format='%d/%m/%y, %H:%M')
+                df['date'] = pd.to_datetime(df['message_date'], format='%m/%d/%y, %I:%M %p')
             except:
-                df['date'] = pd.to_datetime(df['message_date'], errors='coerce')
+                try:
+                    df['date'] = pd.to_datetime(df['message_date'], format='%d/%m/%y, %I:%M %p')
+                except:
+                    try:
+                        df['date'] = pd.to_datetime(df['message_date'], format='%d/%m/%Y, %I:%M %p')
+                    except:
+                        try:
+                            df['date'] = pd.to_datetime(df['message_date'], format='%d/%m/%y, %H:%M')
+                        except:
+                            df['date'] = pd.to_datetime(df['message_date'], errors='coerce')
 
     users = []
     msgs = []
