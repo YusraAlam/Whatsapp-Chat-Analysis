@@ -13,6 +13,7 @@ Place your screenshot in the project folder with the name ss1.png.
 ✨ Features
 
 📊 Chat Overview
+![WhatsApp Chat Analyzer Preview](ss1.png)
 
 Get a quick summary of the selected chat or the complete conversation:
 
