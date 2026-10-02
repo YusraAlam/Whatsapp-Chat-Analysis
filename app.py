@@ -309,9 +309,9 @@ if uploaded_file is not None:
     )
 
     user_list = [
-        x for x in user_list
-        if x != 'group_notification'
-    ]
+    x for x in user_list
+    if x != 'group-notification'
+]
 
     user_list.sort()
 
