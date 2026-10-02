@@ -19,6 +19,11 @@ An interactive web application built with Python and Streamlit to analyze, visua
 🔗 Emoji Analysis: Breakdown of the most commonly used emojis with visual distribution.
 
 🔍 Sentiment / Word Search: Look up specific words or search user-specific statistics.
+## 📸 App Screenshots
+
+| Dashboard & Statistics | Activity Heatmap & Word Cloud |
+| :---: | :---: |
+| ![Dashboard](assets/ss1.png) | ![Heatmap](assets/ss2.png) |
 
 🛠️ Tech Stack
 
