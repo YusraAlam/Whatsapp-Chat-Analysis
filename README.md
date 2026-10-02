@@ -22,7 +22,7 @@ An interactive web application built with Python and Streamlit to analyze, visua
 ## 📸 App Screenshots
 
 
-| ![Dashboard](assets/ss1.png) | 
+ ![Dashboard](ss1.png) | 
 
 🛠️ Tech Stack
 
