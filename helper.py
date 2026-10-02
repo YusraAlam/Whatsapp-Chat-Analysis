@@ -45,13 +45,7 @@ def fetch_stats(selected_user, df):
 
     num_emojis = len(emojis)
 
-    num_calls = df[
-        df['message'].str.contains(
-            'call',
-            case=False,
-            na=False
-        )
-    ].shape[0]
+    num_calls = df[df['message'].astype(str).str.contains('call', case=False, na=False)].shape[0]
 
     if df.empty:
 
