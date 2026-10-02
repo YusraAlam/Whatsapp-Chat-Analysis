@@ -21,6 +21,7 @@ def preprocessing(data):
     df = pd.DataFrame({'user_message': messages, 'message_date': dates})
     
     # Clean date string
+    df['message_date'] = df['message_date'].fillna('').astype(str)
     df['message_date'] = df['message_date'].str.replace(' - ', '', regex=False)
     df['message_date'] = df['message_date'].str.strip()
     
