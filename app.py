@@ -706,36 +706,35 @@ if uploaded_file is not None:
             )
 
     with tab5:
-        st.subheader("Cleaned Chat Data")
+    st.subheader("Cleaned Chat Data")
 
-        st.dataframe(
+    st.dataframe(
         df,
         use_container_width=True
     )
 
-        st.download_button(
+    st.download_button(
         "Download Cleaned CSV",
         data=df.to_csv(index=False).encode("utf-8"),
         file_name="whatsapp_cleaned.csv",
         mime="text/csv"
     )
 
-        st.divider()  
-        
-        st.subheader("Media & Links")
+    st.divider()
 
-        media_links_df = helper.media_and_links(df)
+    st.subheader("Media & Links")
 
-        st.dataframe(
+    media_links_df = helper.media_and_links(df)
+
+    st.dataframe(
         media_links_df,
         use_container_width=True,
         hide_index=True
     )
 
-       st.download_button(
+    st.download_button(
         "Download Media & Links CSV",
         data=media_links_df.to_csv(index=False).encode("utf-8"),
         file_name="whatsapp_media_links.csv",
         mime="text/csv"
     )
-
