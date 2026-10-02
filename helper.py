@@ -12,6 +12,7 @@ def fetch_stats(selected_user, df):
 
     if selected_user != 'overall':
         df = df[df['user'] == selected_user]
+    df['message'] = df['message'].fillna('').astype(str)    
 
     num_msgs = df.shape[0]
 
@@ -318,8 +319,8 @@ def create_wordcloud(selected_user, df):
     ].apply(remove_stop_words)
 
     df_wc = wc.generate(
-        temp['message'].str.cat(sep=" ")
-    )
+    temp['message'].astype(str).str.cat(sep=" ")
+)
 
     return df_wc
 
