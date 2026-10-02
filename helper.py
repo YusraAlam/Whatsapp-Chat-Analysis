@@ -12,11 +12,13 @@ def fetch_stats(selected_user, df):
 
     if selected_user != 'overall':
         df = df[df['user'] == selected_user]
-    df['message'] = df['message'].fillna('').astype(str)    
+
+    df['message'] = df['message'].fillna('').astype(str)
 
     num_msgs = df.shape[0]
 
     words = []
+
     for message in df['message']:
         words.extend(message.split())
 
@@ -46,7 +48,11 @@ def fetch_stats(selected_user, df):
 
     num_emojis = len(emojis)
 
-    num_calls = df[df['message'].astype(str).str.contains('call', case=False, na=False)].shape[0]
+    num_calls = df[
+        df['message']
+        .astype(str)
+        .str.contains('call', case=False, na=False)
+    ].shape[0]
 
     if df.empty:
 
@@ -290,7 +296,7 @@ def create_wordcloud(selected_user, df):
 
     temp = df[
         df['user'] != 'group_notification'
-    ]
+    ].copy()
 
     temp = temp[
         temp['message'] != '<Media omitted>\n'
@@ -316,16 +322,18 @@ def create_wordcloud(selected_user, df):
 
     temp['message'] = temp[
         'message'
-    ].apply(remove_stop_words)
+    ].fillna('').astype(str).apply(remove_stop_words)
 
-    text = temp['message'].astype(str).str.cat(sep=" ")
+    text = temp[
+        'message'
+    ].astype(str).str.cat(sep=" ")
 
     if not text.strip():
-       return None
+        return None
 
-df_wc = wc.generate(text)
+    df_wc = wc.generate(text)
 
-return df_wc
+    return df_wc
 
 
 def top_word(selected_user, df):
