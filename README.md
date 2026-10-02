@@ -23,7 +23,7 @@ An interactive web application built with Python and Streamlit to analyze, visua
 
 | Dashboard & Statistics | Activity Heatmap & Word Cloud |
 | :---: | :---: |
-| ![Dashboard](assets/ss1.png) | ![Heatmap](assets/ss3.png) |
+| ![Dashboard](assets/ss1.png) | 
 
 🛠️ Tech Stack
 
