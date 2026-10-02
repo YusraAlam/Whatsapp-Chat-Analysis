@@ -717,6 +717,7 @@ if uploaded_file is not None:
         em_df = helper.top_sticker(
             selected_user,
             df
+            pie_df = em_df.head(10)
         )
 
         if not em_df.empty:
@@ -736,7 +737,7 @@ if uploaded_file is not None:
                 fig, ax = plt.subplots()
 
                 ax.pie(
-                    em_df['Count'],
+                    pie_df['Count'],
                     labels=em_df['Emoji'],
                     autopct='%1.1f%%'
                 )
