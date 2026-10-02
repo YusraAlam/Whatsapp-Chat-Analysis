@@ -11,6 +11,12 @@ edited
 {
 }
 tu 
+?
++
+-
+//
+class
+return
 rhi
 int 
 ? 
