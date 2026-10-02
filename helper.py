@@ -416,3 +416,24 @@ def most_active_user(df):
     )
 
     return x
+def media_and_links(df):
+
+    result = df.copy()
+
+    result["Media"] = result["message"].apply(
+        lambda x: "Yes" if x == "<Media omitted>\n" else "No"
+    )
+
+    result["Links"] = result["message"].apply(
+        lambda x: URLExtract().find_urls(str(x))
+    )
+
+    result["Links"] = result["Links"].apply(
+        lambda x: ", ".join(x) if x else ""
+    )
+
+    result = result[
+        ["date", "user", "message", "Media", "Links"]
+    ]
+
+    return result    
