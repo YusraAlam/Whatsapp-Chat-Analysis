@@ -318,11 +318,14 @@ def create_wordcloud(selected_user, df):
         'message'
     ].apply(remove_stop_words)
 
-    df_wc = wc.generate(
-    temp['message'].astype(str).str.cat(sep=" ")
-)
+    text = temp['message'].astype(str).str.cat(sep=" ")
 
-    return df_wc
+if not text.strip():
+    return None
+
+df_wc = wc.generate(text)
+
+return df_wc
 
 
 def top_word(selected_user, df):
