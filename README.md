@@ -21,8 +21,7 @@ An interactive web application built with Python and Streamlit to analyze, visua
 🔍 Sentiment / Word Search: Look up specific words or search user-specific statistics.
 ## 📸 App Screenshots
 
-| Dashboard & Statistics | 
-| :---: | :---: |
+
 | ![Dashboard](assets/ss1.png) | 
 
 🛠️ Tech Stack
