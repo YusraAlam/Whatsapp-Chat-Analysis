@@ -717,8 +717,9 @@ if uploaded_file is not None:
         em_df = helper.top_sticker(
             selected_user,
             df
-            pie_df = em_df.head(10)
+            
         )
+        pie_df = em_df.head(10)
 
         if not em_df.empty:
 
