@@ -4,7 +4,9 @@ import preprocessing
 import helper
 
 st.set_page_config(
-    page_title="WhatsApp Analyzer",page_icon="💬",layout="wide"
+    page_title="WhatsApp Analyzer",
+    page_icon="💬",
+    layout="wide"
 )
 
 st.markdown(
@@ -14,9 +16,11 @@ st.markdown(
         background-color: #FFFFFF;
         color: #111111;
     }
+
     .main {
         background-color: #FFFFFF;
     }
+
     .stMarkdown,
     .stText,
     p,
@@ -24,6 +28,7 @@ st.markdown(
     span {
         color: #111111;
     }
+
     .main-title {
         font-size: 42px;
         font-weight: 800;
@@ -32,15 +37,18 @@ st.markdown(
         margin-top: 10px;
         margin-bottom: 5px;
     }
+
     .sub-title {
         text-align: center;
         color: #555555 !important;
         margin-bottom: 30px;
         font-size: 16px;
     }
+
     section[data-testid="stSidebar"] {
         background-color: #075E54 !important;
     }
+
     section[data-testid="stSidebar"] h1,
     section[data-testid="stSidebar"] h2,
     section[data-testid="stSidebar"] h3,
@@ -50,20 +58,25 @@ st.markdown(
     section[data-testid="stSidebar"] div {
         color: #FFFFFF !important;
     }
+
     section[data-testid="stFileUploader"] {
         background-color: #128C7E !important;
         border-radius: 12px !important;
         padding: 12px !important;
     }
+
     section[data-testid="stFileUploader"] label {
         color: #FFFFFF !important;
     }
+
     section[data-testid="stFileUploader"] span {
         color: #FFFFFF !important;
     }
+
     section[data-testid="stFileUploader"] small {
         color: #FFFFFF !important;
     }
+
     section[data-testid="stFileUploader"] button {
         background-color: #25D366 !important;
         color: #111111 !important;
@@ -76,36 +89,44 @@ st.markdown(
         background-color: #20BD5A !important;
         color: #FFFFFF !important;
     }
+
     div[data-baseweb="select"] > div {
         background-color: #FFFFFF !important;
         color: #111111 !important;
         border-radius: 8px !important;
     }
+
     div[data-baseweb="select"] input {
         color: #111111 !important;
     }
+
     div[data-baseweb="select"] span {
         color: #111111 !important;
     }
+
     button[data-baseweb="tab"] {
         color: #075E54 !important;
         font-weight: 600 !important;
         background-color: transparent !important;
     }
+
     button[data-baseweb="tab"] p,
     button[data-baseweb="tab"] span {
         color: #075E54 !important;
         font-weight: 600 !important;
     }
+
     button[data-baseweb="tab"][aria-selected="true"],
     button[data-baseweb="tab"][aria-selected="true"] p,
     button[data-baseweb="tab"][aria-selected="true"] span {
         color: #128C7E !important;
         font-weight: 700 !important;
     }
+
     div[data-baseweb="tab-highlight"] {
         background-color: #25D366 !important;
     }
+
     h1, h2, h3, h4 {
         color: #111111 !important;
     }
@@ -251,7 +272,6 @@ st.markdown(
     .st-key-peak_metric div[data-testid="stMetricDelta"] * {
         font-size: 0.8rem !important;
     }
-
     </style>
     """,
     unsafe_allow_html=True
@@ -301,6 +321,10 @@ if uploaded_file is not None:
 
         st.stop()
 
+    # =========================
+    # USER LIST
+    # =========================
+
     user_list = (
         df['user']
         .dropna()
@@ -308,8 +332,9 @@ if uploaded_file is not None:
         .tolist()
     )
 
-    if 'group-notification' in user_list:
-      user_list.remove('group_notification')
+    # Remove group notification
+    if 'group_notification' in user_list:
+        user_list.remove('group_notification')
 
     user_list.sort()
 
@@ -347,6 +372,10 @@ if uploaded_file is not None:
         ]
     )
 
+    # =========================================================
+    # TAB 1 - OVERVIEW
+    # =========================================================
+
     with tab1:
 
         (
@@ -372,24 +401,28 @@ if uploaded_file is not None:
         col1, col2, col3, col4 = st.columns(4)
 
         with col1:
+
             st.metric(
                 "💬 Messages",
                 f"{num_msgs:,}"
             )
 
         with col2:
+
             st.metric(
                 "📝 Words",
                 f"{num_words:,}"
             )
 
         with col3:
+
             st.metric(
                 "📅 Active Days",
                 f"{num_days:,}"
             )
 
         with col4:
+
             st.metric(
                 "📷 Media",
                 f"{num_media:,}"
@@ -398,18 +431,21 @@ if uploaded_file is not None:
         col1, col2, col3, col4 = st.columns(4)
 
         with col1:
+
             st.metric(
                 "🔗 Links",
                 f"{num_link:,}"
             )
 
         with col2:
+
             st.metric(
                 "😂 Emojis",
                 f"{num_emojis:,}"
             )
 
         with col3:
+
             st.metric(
                 "📞 Calls",
                 f"{num_calls:,}"
@@ -417,13 +453,19 @@ if uploaded_file is not None:
 
         with col4:
 
-            peak = helper.peak_hour_info(selected_user, df)
+            peak = helper.peak_hour_info(
+                selected_user,
+                df
+            )
 
             with st.container(key="peak_metric"):
 
                 if peak is None:
 
-                    st.metric("⏰ Peak Hour", "No data")
+                    st.metric(
+                        "⏰ Peak Hour",
+                        "No data"
+                    )
 
                 else:
 
@@ -464,6 +506,10 @@ if uploaded_file is not None:
             st.info(
                 f"📱 Showing statistics for **{selected_user}**"
             )
+
+    # =========================================================
+    # TAB 2 - ACTIVITY
+    # =========================================================
 
     with tab2:
 
@@ -585,6 +631,10 @@ if uploaded_file is not None:
             use_container_width=True
         )
 
+    # =========================================================
+    # TAB 3 - WORDS & EMOJIS
+    # =========================================================
+
     with tab3:
 
         st.subheader(
@@ -596,7 +646,7 @@ if uploaded_file is not None:
         with col1:
 
             st.markdown(
-                "### ☁️️ Word Cloud"
+                "### ☁️ Word Cloud"
             )
 
             wordcloud = helper.create_wordcloud(
@@ -686,10 +736,10 @@ if uploaded_file is not None:
                 fig, ax = plt.subplots()
 
                 ax.pie(
-    em_df['Count'],
-    labels=em_df['Emoji'],
-    autopct='%1.1f%%'
-)
+                    em_df['Count'],
+                    labels=em_df['Emoji'],
+                    autopct='%1.1f%%'
+                )
 
                 ax.set_title(
                     "Emoji Distribution"
@@ -705,6 +755,10 @@ if uploaded_file is not None:
             st.info(
                 "No emojis found."
             )
+
+    # =========================================================
+    # TAB 4 - PEOPLE
+    # =========================================================
 
     with tab4:
 
@@ -764,6 +818,10 @@ if uploaded_file is not None:
             st.info(
                 f"👤 You are currently analyzing: {selected_user}"
             )
+
+    # =========================================================
+    # TAB 5 - DATA
+    # =========================================================
 
     with tab5:
 
