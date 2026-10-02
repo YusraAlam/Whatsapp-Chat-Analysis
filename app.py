@@ -308,10 +308,8 @@ if uploaded_file is not None:
         .tolist()
     )
 
-    user_list = [
-    x for x in user_list
-    if x != 'group-notification'
-]
+    if 'group-notification' in user_list:
+    user_list.remove('group_notification')
 
     user_list.sort()
 
