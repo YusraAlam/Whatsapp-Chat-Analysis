@@ -113,237 +113,74 @@ Emoji extraction and analysis
 
 WhatsApp message parsing
 
-📁 Project Structure
+## 📁 Project Structure
 
+```text
 whatsapp-chat-analyzer/
 │
-├── app.py
+├── app (2).py
 ├── preprocessing.py
 ├── helper.py
 ├── stop_hinglish.txt
 ├── ss1.png
 └── README.md
-
-If your main Python file has a different name, keep that filename in the structure instead of app.py.
-
-🔄 How It Works
-
-The project follows a simple data-analysis pipeline:
-
-WhatsApp Exported .txt File
-            ↓
-     Message Parsing
-            ↓
-      Data Cleaning
-            ↓
-    Date & User Extraction
-            ↓
-     Feature Extraction
-            ↓
-     Statistical Analysis
-            ↓
-   Charts & Visualizations
-            ↓
-      Streamlit Dashboard
-
-1. Upload Chat
-
-The application accepts an exported WhatsApp .txt file from the sidebar.
-
-2. Preprocess the Chat
-
-The preprocessing module uses regular expressions to identify WhatsApp timestamps and separates:
-
-Date
-
-Time
-
-User
-
-Message
-
-It supports both 12-hour (AM/PM) and 24-hour WhatsApp timestamp formats.
-
-3. Create Analysis Features
-
-Additional columns are generated for:
-
-Date
-
-Year
-
-Month
-
-Day
-
-Day name
-
-Hour
-
-Minute
-
-4. Analyze the Conversation
-
-The helper functions calculate statistics and generate visualizations for activity, words, emojis, and users.
-
-5. Explore the Dashboard
-
-The Streamlit application organizes the analysis into five sections:
-
-📊 Overview
-📈 Activity
-📝 Words & Emojis
-👥 People
-📋 Data
-
-🚀 Getting Started
-
-1. Clone the Repository
-
-git clone <your-repository-url>
-cd whatsapp-chat-analyzer
-
-2. Create a Virtual Environment
-
-python -m venv venv
-
-Activate it on Windows:
-
-venv\Scripts\activate
-
-3. Install Dependencies
-
-pip install streamlit pandas matplotlib wordcloud urlextract emoji
-
-4. Run the Application
-
-streamlit run app.py
-
-The application will open in your browser.
-
-📱 How to Export a WhatsApp Chat
-
-From WhatsApp:
-
-Open Chat
-   ↓
-Chat Options
-   ↓
-Export Chat
-   ↓
-Without Media
-   ↓
-Save the .txt file
-
-Then upload the exported .txt file into the application.
-
-🧩 Main Modules
-
-app.py
-
-Handles the Streamlit interface and connects all parts of the project.
-
-It includes:
-
-Page configuration
-
-Custom WhatsApp-inspired styling
-
-File upload
-
-User selection
-
-Dashboard tabs
-
-Metrics
-
-Charts
-
-Cleaned-data display
-
-CSV download
-
-preprocessing.py
-
-Responsible for converting the raw WhatsApp text into a structured Pandas DataFrame.
-
-The preprocessing step identifies timestamps, users, messages, and derives date/time features.
-
-helper.py
-
-Contains the main analysis functions, including:
-
-fetch_stats()
-
-peak_hour_info()
-
-most_talkative()
-
-most_busy_day()
-
-most_busy_hour()
-
-most_busy_month()
-
-most_busy_date()
-
-create_wordcloud()
-
-top_word()
-
-top_sticker()
-
-most_active_user()
-
-📊 Example Insights
-
-After uploading a chat, the dashboard can answer questions such as:
-
-Who sent the most messages?
-
-How many messages were exchanged?
-
-Which day was the most active?
-
-What hour had the highest messaging activity?
-
-Which month had the most activity?
-
-What words were used most frequently?
-
-Which emojis were used the most?
-
-How many links were shared?
-
-How many media messages were sent?
-
-Which users were the most active?
-
-🎨 UI
-
-The application uses a WhatsApp-inspired design with:
-
-WhatsApp green theme
-
-Sidebar navigation
-
-Metric cards
-
-Interactive tabs
-
-Charts and tables
-
-Clean white dashboard layout
-
-CSV download option
-
-📌 Important Files
-
-stop_hinglish.txt
-
-This file is used by the word cloud and most-common-word analysis to filter out common Hinglish/stop words.
-
-Make sure it is present in the same project directory when running the application.
+```
+
+### 📄 File Description
+
+| File                | Purpose                                                                                |
+| ------------------- | -------------------------------------------------------------------------------------- |
+| `app (2).py`        | Main Streamlit application and dashboard                                               |
+| `preprocessing.py`  | Raw WhatsApp `.txt` file ko clean karke structured DataFrame banata hai                |
+| `helper.py`         | Statistics, charts, word cloud, emojis aur user analysis ke functions                  |
+| `stop_hinglish.txt` | Word Cloud aur common-word analysis se unwanted/common Hinglish words remove karta hai |
+| `ss1.png`           | Project dashboard ka preview screenshot                                                |
+| `README.md`         | Project documentation                                                                  |
+
+### 🔗 How the Files Work Together
+
+```text
+                 WhatsApp .txt File
+                         │
+                         ▼
+                ┌─────────────────┐
+                │   app (2).py    │
+                │  Streamlit UI   │
+                └────────┬────────┘
+                         │
+                         ▼
+                ┌─────────────────┐
+                │ preprocessing.py│
+                │ Data Processing  │
+                └────────┬────────┘
+                         │
+                         ▼
+                  Clean DataFrame
+                         │
+                         ▼
+                ┌─────────────────┐
+                │    helper.py    │
+                │ Data Analysis & │
+                │ Visualization   │
+                └────────┬────────┘
+                         │
+                         ▼
+                ┌─────────────────┐
+                │ Streamlit Tabs  │
+                │                 │
+                │ 📊 Overview     │
+                │ 📈 Activity     │
+                │ 📝 Words/Emoji  │
+                │ 👥 People       │
+                │ 📋 Data         │
+                └─────────────────┘
+```
+
+`app (2).py` imports both `preprocessing` and `helper`, so the three Python files work together as the main application pipeline.
+
+The preprocessing module converts the raw chat into columns such as `date`, `user`, `message`, `year`, `month`, `day`, `hour`, and `minute`.
+
+The helper module then performs the actual analysis, including message statistics, peak hour, activity analysis, word cloud, common words, emojis, and active users.
 
 ⚠️ Notes
 
