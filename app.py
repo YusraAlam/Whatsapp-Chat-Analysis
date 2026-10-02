@@ -739,7 +739,7 @@ if uploaded_file is not None:
 
                 ax.pie(
                     pie_df['Count'],
-                    labels=em_df['Emoji'],
+                    labels=pie_df['Emoji'],
                     autopct='%1.1f%%'
                 )
 
