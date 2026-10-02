@@ -320,8 +320,8 @@ def create_wordcloud(selected_user, df):
 
     text = temp['message'].astype(str).str.cat(sep=" ")
 
-if not text.strip():
-    return None
+    if not text.strip():
+       return None
 
 df_wc = wc.generate(text)
 
