@@ -1,4 +1,3 @@
-```python
 import streamlit as st
 import matplotlib.pyplot as plt
 import preprocessing
@@ -6,7 +5,7 @@ import helper
 
 st.set_page_config(
     page_title="WhatsApp Analyzer",
-    page_icon="💬",
+    
     layout="wide"
 )
 
@@ -276,7 +275,7 @@ st.markdown(
 )
 
 st.markdown(
-    '<div class="main-title">💬 WhatsApp Chat Analyzer</div>',
+    '<div class="main-title"> WhatsApp Chat Analyzer</div>',
     unsafe_allow_html=True
 )
 
@@ -285,9 +284,9 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.sidebar.title("💬 WhatsApp Analyzer")
+st.sidebar.title(" WhatsApp Analyzer")
 
-st.sidebar.markdown("### 📁 Upload Chat")
+st.sidebar.markdown("###  Upload Chat")
 
 uploaded_file = st.sidebar.file_uploader(
     "Choose WhatsApp exported .txt file",
@@ -322,24 +321,24 @@ if uploaded_file is not None:
     user_list.insert(0, "overall")
 
     selected_user = st.sidebar.selectbox(
-        "👤 Analyze User",
+        " Analyze User",
         user_list
     )
 
     st.sidebar.markdown("---")
 
     if selected_user == "overall":
-        st.sidebar.success("👥 Analyzing entire chat")
+        st.sidebar.success(" Analyzing entire chat")
     else:
-        st.sidebar.success(f"👤 Analyzing: {selected_user}")
+        st.sidebar.success(f" Analyzing: {selected_user}")
 
     tab1, tab2, tab3, tab4, tab5 = st.tabs(
         [
-            "📊 Overview",
-            "📈 Activity",
-            "📝 Words & Emojis",
-            "👥 People",
-            "📋 Data"
+            " Overview",
+            " Activity",
+            "Words & Emojis",
+            "People",
+            " Data"
         ]
     )
 
@@ -358,7 +357,7 @@ if uploaded_file is not None:
             df
         )
 
-        st.subheader("📊 Chat Overview")
+        st.subheader("Chat Overview")
 
         st.caption(
             "A quick summary of your WhatsApp conversation"
@@ -368,25 +367,25 @@ if uploaded_file is not None:
 
         with col1:
             st.metric(
-                "💬 Messages",
+                "Messages",
                 f"{num_msgs:,}"
             )
 
         with col2:
             st.metric(
-                "📝 Words",
+                " Words",
                 f"{num_words:,}"
             )
 
         with col3:
             st.metric(
-                "📅 Active Days",
+                " Active Days",
                 f"{num_days:,}"
             )
 
         with col4:
             st.metric(
-                "📷 Media",
+                "Media",
                 f"{num_media:,}"
             )
 
@@ -394,19 +393,19 @@ if uploaded_file is not None:
 
         with col1:
             st.metric(
-                "🔗 Links",
+                " Links",
                 f"{num_link:,}"
             )
 
         with col2:
             st.metric(
-                "😂 Emojis",
+                "Emojis",
                 f"{num_emojis:,}"
             )
 
         with col3:
             st.metric(
-                "📞 Calls",
+                " Calls",
                 f"{num_calls:,}"
             )
 
@@ -419,14 +418,14 @@ if uploaded_file is not None:
             with st.container(key="peak_metric"):
                 if peak is None:
                     st.metric(
-                        "⏰ Peak Hour",
+                        " Peak Hour",
                         "No data"
                     )
                 else:
                     label, count, percent = peak
 
                     st.metric(
-                        "⏰ Peak Hour",
+                        " Peak Hour",
                         label,
                         f"{count:,} msgs · {percent:.0f}%",
                         delta_color="off"
@@ -435,7 +434,7 @@ if uploaded_file is not None:
         st.divider()
 
         if selected_user == "overall":
-            st.subheader("🗣️ Most Talkative Users")
+            st.subheader(" Most Talkative Users")
 
             fig, new_df = helper.most_talkative(df)
 
@@ -451,11 +450,11 @@ if uploaded_file is not None:
             )
         else:
             st.info(
-                f"📱 Showing statistics for **{selected_user}**"
+                f" Showing statistics for **{selected_user}**"
             )
 
     with tab2:
-        st.subheader("📈 Chat Activity")
+        st.subheader(" Chat Activity")
 
         st.caption(
             "See when the conversation was most active"
@@ -464,7 +463,7 @@ if uploaded_file is not None:
         col1, col2 = st.columns(2)
 
         with col1:
-            st.markdown("### 📅 Messages by Day")
+            st.markdown("###  Messages by Day")
 
             day_data = helper.most_busy_day(
                 selected_user,
@@ -493,7 +492,7 @@ if uploaded_file is not None:
             )
 
         with col2:
-            st.markdown("### 🕐 Messages by Hour")
+            st.markdown("###  Messages by Hour")
 
             hour_data = helper.most_busy_hour(
                 selected_user,
@@ -523,7 +522,7 @@ if uploaded_file is not None:
                 use_container_width=True
             )
 
-        st.markdown("### 📆 Monthly Activity")
+        st.markdown("### Monthly Activity")
 
         fig = helper.most_busy_month(
             selected_user,
@@ -535,7 +534,7 @@ if uploaded_file is not None:
             use_container_width=True
         )
 
-        st.markdown("### 🔥 Top 10 Busiest Dates")
+        st.markdown("###  Top 10 Busiest Dates")
 
         fig = helper.most_busy_date(
             selected_user,
@@ -548,12 +547,12 @@ if uploaded_file is not None:
         )
 
     with tab3:
-        st.subheader("📝 Words & Emojis")
+        st.subheader(" Words & Emojis")
 
         col1, col2 = st.columns(2)
 
         with col1:
-            st.markdown("### ☁️ Word Cloud")
+            st.markdown("###  Word Cloud")
 
             wordcloud = helper.create_wordcloud(
                 selected_user,
@@ -576,7 +575,7 @@ if uploaded_file is not None:
                 )
 
         with col2:
-            st.markdown("### 🔤 Most Common Words")
+            st.markdown("###  Most Common Words")
 
             new_df = helper.top_word(
                 selected_user,
@@ -609,7 +608,7 @@ if uploaded_file is not None:
 
         st.divider()
 
-        st.markdown("### 😂 Most Used Emojis")
+        st.markdown("###  Most Used Emojis")
 
         em_df = helper.top_sticker(
             selected_user,
@@ -647,19 +646,19 @@ if uploaded_file is not None:
             st.info("No emojis found.")
 
     with tab4:
-        st.subheader("👥 People Analysis")
+        st.subheader(" People Analysis")
 
         if selected_user == "overall":
             user_data = helper.most_active_user(df)
 
-            st.markdown("### 👤 Most Active People")
+            st.markdown("###  Most Active People")
 
             st.dataframe(
                 user_data,
                 use_container_width=True
             )
 
-            st.markdown("### 📊 User-wise Message Count")
+            st.markdown("### User-wise Message Count")
 
             fig, ax = plt.subplots(figsize=(10, 5))
 
@@ -683,11 +682,11 @@ if uploaded_file is not None:
             )
         else:
             st.info(
-                f"👤 You are currently analyzing: {selected_user}"
+                f" You are currently analyzing: {selected_user}"
             )
 
     with tab5:
-        st.subheader("📋 Cleaned Chat Data")
+        st.subheader(" Cleaned Chat Data")
 
         st.dataframe(
             df,
@@ -699,7 +698,7 @@ if uploaded_file is not None:
         ).encode("utf-8")
 
         st.download_button(
-            "⬇️ Download Cleaned CSV",
+            " Download Cleaned CSV",
             data=csv,
             file_name="whatsapp_cleaned.csv",
             mime="text/csv"
