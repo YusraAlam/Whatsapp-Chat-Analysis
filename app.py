@@ -688,10 +688,10 @@ if uploaded_file is not None:
                 fig, ax = plt.subplots()
 
                 ax.pie(
-                    em_df[1],
-                    labels=em_df[0],
-                    autopct='%1.1f%%'
-                )
+    em_df['Count'],
+    labels=em_df['Emoji'],
+    autopct='%1.1f%%'
+)
 
                 ax.set_title(
                     "Emoji Distribution"
