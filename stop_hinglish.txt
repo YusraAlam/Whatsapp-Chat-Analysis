@@ -4,6 +4,10 @@ ha
 m
 na
 =
+kr
+ok
+hn
+kr
 vector
 media
 omitted
@@ -11,6 +15,8 @@ edited
 public
 };
 {
+int
+solution
 }
 tu 
 ?
