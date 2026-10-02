@@ -3,15 +3,26 @@ import matplotlib.pyplot as plt
 import preprocessing
 import helper
 
+
+# =========================================================
+# PAGE CONFIG
+# =========================================================
+
 st.set_page_config(
     page_title="WhatsApp Analyzer",
     page_icon="💬",
     layout="wide"
 )
 
+
+# =========================================================
+# WHATSAPP STYLE
+# =========================================================
+
 st.markdown(
     """
     <style>
+
     .stApp {
         background-color: #FFFFFF;
         color: #111111;
@@ -180,6 +191,7 @@ st.markdown(
         border: 1px solid #25D366;
         border-radius: 10px;
         overflow: hidden;
+        background-color: #FFFFFF !important;
     }
 
     div[data-testid="stAlert"] {
@@ -258,10 +270,6 @@ st.markdown(
         color: #128C7E !important;
     }
 
-    div[data-testid="stDataFrame"] {
-        background-color: #FFFFFF !important;
-    }
-
     .st-key-peak_metric div[data-testid="stMetricValue"],
     .st-key-peak_metric div[data-testid="stMetricValue"] * {
         font-size: 1.5rem !important;
@@ -272,10 +280,16 @@ st.markdown(
     .st-key-peak_metric div[data-testid="stMetricDelta"] * {
         font-size: 0.8rem !important;
     }
+
     </style>
     """,
     unsafe_allow_html=True
 )
+
+
+# =========================================================
+# TITLE
+# =========================================================
 
 st.markdown(
     '<div class="main-title">💬 WhatsApp Chat Analyzer</div>',
@@ -289,6 +303,11 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+
+# =========================================================
+# SIDEBAR
+# =========================================================
+
 st.sidebar.title("💬 WhatsApp Analyzer")
 
 st.sidebar.markdown(
@@ -299,6 +318,11 @@ uploaded_file = st.sidebar.file_uploader(
     "Choose WhatsApp exported .txt file",
     type=["txt"]
 )
+
+
+# =========================================================
+# MAIN APP
+# =========================================================
 
 if uploaded_file is not None:
 
@@ -321,9 +345,10 @@ if uploaded_file is not None:
 
         st.stop()
 
-    # =========================
+
+    # =====================================================
     # USER LIST
-    # =========================
+    # =====================================================
 
     user_list = (
         df['user']
@@ -332,7 +357,6 @@ if uploaded_file is not None:
         .tolist()
     )
 
-    # Remove group notification
     if 'group_notification' in user_list:
         user_list.remove('group_notification')
 
@@ -362,6 +386,11 @@ if uploaded_file is not None:
             f"👤 Analyzing: {selected_user}"
         )
 
+
+    # =====================================================
+    # TABS
+    # =====================================================
+
     tab1, tab2, tab3, tab4, tab5 = st.tabs(
         [
             "📊 Overview",
@@ -371,6 +400,7 @@ if uploaded_file is not None:
             "📋 Data"
         ]
     )
+
 
     # =========================================================
     # TAB 1 - OVERVIEW
@@ -392,11 +422,18 @@ if uploaded_file is not None:
             df
         )
 
-        st.subheader("📊 Chat Overview")
+        st.subheader(
+            "📊 Chat Overview"
+        )
 
         st.caption(
             "A quick summary of your WhatsApp conversation"
         )
+
+
+        # -----------------------------------------------------
+        # FIRST ROW
+        # -----------------------------------------------------
 
         col1, col2, col3, col4 = st.columns(4)
 
@@ -428,6 +465,11 @@ if uploaded_file is not None:
                 f"{num_media:,}"
             )
 
+
+        # -----------------------------------------------------
+        # SECOND ROW
+        # -----------------------------------------------------
+
         col1, col2, col3, col4 = st.columns(4)
 
         with col1:
@@ -458,7 +500,9 @@ if uploaded_file is not None:
                 df
             )
 
-            with st.container(key="peak_metric"):
+            with st.container(
+                key="peak_metric"
+            ):
 
                 if peak is None:
 
@@ -478,7 +522,13 @@ if uploaded_file is not None:
                         delta_color="off"
                     )
 
+
         st.divider()
+
+
+        # -----------------------------------------------------
+        # MOST TALKATIVE
+        # -----------------------------------------------------
 
         if selected_user == "overall":
 
@@ -507,6 +557,7 @@ if uploaded_file is not None:
                 f"📱 Showing statistics for **{selected_user}**"
             )
 
+
     # =========================================================
     # TAB 2 - ACTIVITY
     # =========================================================
@@ -521,7 +572,13 @@ if uploaded_file is not None:
             "See when the conversation was most active"
         )
 
+
+        # -----------------------------------------------------
+        # DAY + HOUR
+        # -----------------------------------------------------
+
         col1, col2 = st.columns(2)
+
 
         with col1:
 
@@ -561,6 +618,7 @@ if uploaded_file is not None:
                 fig,
                 use_container_width=True
             )
+
 
         with col2:
 
@@ -603,6 +661,11 @@ if uploaded_file is not None:
                 use_container_width=True
             )
 
+
+        # -----------------------------------------------------
+        # MONTHLY ACTIVITY
+        # -----------------------------------------------------
+
         st.markdown(
             "### 📆 Monthly Activity"
         )
@@ -616,6 +679,11 @@ if uploaded_file is not None:
             fig,
             use_container_width=True
         )
+
+
+        # -----------------------------------------------------
+        # BUSIEST DATES
+        # -----------------------------------------------------
 
         st.markdown(
             "### 🔥 Top 10 Busiest Dates"
@@ -631,6 +699,7 @@ if uploaded_file is not None:
             use_container_width=True
         )
 
+
     # =========================================================
     # TAB 3 - WORDS & EMOJIS
     # =========================================================
@@ -643,6 +712,11 @@ if uploaded_file is not None:
 
         col1, col2 = st.columns(2)
 
+
+        # -----------------------------------------------------
+        # WORD CLOUD
+        # -----------------------------------------------------
+
         with col1:
 
             st.markdown(
@@ -654,20 +728,33 @@ if uploaded_file is not None:
                 df
             )
 
-            fig, ax = plt.subplots(
-                figsize=(8, 5)
-            )
+            if wordcloud is not None:
 
-            ax.imshow(
-                wordcloud
-            )
+                fig, ax = plt.subplots(
+                    figsize=(8, 6)
+                )
 
-            ax.axis("off")
+                ax.imshow(
+                    wordcloud
+                )
 
-            st.pyplot(
-                fig,
-                use_container_width=True
-            )
+                ax.axis('off')
+
+                st.pyplot(
+                    fig,
+                    use_container_width=True
+                )
+
+            else:
+
+                st.info(
+                    "No words available for word cloud."
+                )
+
+
+        # -----------------------------------------------------
+        # TOP WORDS
+        # -----------------------------------------------------
 
         with col2:
 
@@ -680,33 +767,46 @@ if uploaded_file is not None:
                 df
             )
 
-            fig, ax = plt.subplots(
-                figsize=(8, 5)
-            )
+            if not new_df.empty:
 
-            ax.bar(
-                new_df[0],
-                new_df[1],
-                color="#25D366"
-            )
+                fig, ax = plt.subplots(
+                    figsize=(8, 5)
+                )
 
-            ax.set_ylabel(
-                "Frequency"
-            )
+                ax.bar(
+                    new_df[0],
+                    new_df[1],
+                    color="#25D366"
+                )
 
-            ax.spines['top'].set_visible(False)
-            ax.spines['right'].set_visible(False)
+                ax.set_ylabel(
+                    "Frequency"
+                )
 
-            plt.xticks(
-                rotation=90
-            )
+                ax.spines['top'].set_visible(False)
+                ax.spines['right'].set_visible(False)
 
-            plt.tight_layout()
+                plt.xticks(
+                    rotation=90
+                )
 
-            st.pyplot(
-                fig,
-                use_container_width=True
-            )
+                plt.tight_layout()
+
+                st.pyplot(
+                    fig,
+                    use_container_width=True
+                )
+
+            else:
+
+                st.info(
+                    "No words found."
+                )
+
+
+        # -----------------------------------------------------
+        # EMOJIS
+        # -----------------------------------------------------
 
         st.divider()
 
@@ -717,13 +817,14 @@ if uploaded_file is not None:
         em_df = helper.top_sticker(
             selected_user,
             df
-            
         )
-        pie_df = em_df.head(10)
 
         if not em_df.empty:
 
+            pie_df = em_df.head(10)
+
             col1, col2 = st.columns(2)
+
 
             with col1:
 
@@ -732,6 +833,7 @@ if uploaded_file is not None:
                     use_container_width=True,
                     hide_index=True
                 )
+
 
             with col2:
 
@@ -757,6 +859,7 @@ if uploaded_file is not None:
             st.info(
                 "No emojis found."
             )
+
 
     # =========================================================
     # TAB 4 - PEOPLE
@@ -820,6 +923,7 @@ if uploaded_file is not None:
             st.info(
                 f"👤 You are currently analyzing: {selected_user}"
             )
+
 
     # =========================================================
     # TAB 5 - DATA
